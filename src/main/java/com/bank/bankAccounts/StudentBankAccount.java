@@ -4,19 +4,19 @@ import com.bank.people.BankAccountOwner;
 
 public class StudentBankAccount extends BaseBankAccount {
 
-    private String school;
+    private String schoolName;
 
     public StudentBankAccount(String uuid, String accountNumber, BankAccountOwner owner, String school) {
         super(uuid, accountNumber, owner);
 
-        this.school = school;
+        this.schoolName = school;
     }
 
-    public String getSchool() {
-        return school;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }

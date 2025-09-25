@@ -32,7 +32,7 @@ public class Main {
         // StudentBankAccount
         BaseBankAccount studentAccount = new StudentBankAccount("4", "19380", owner, "DELTA");
         if (studentAccount instanceof StudentBankAccount studentBankAccount)
-            System.out.println(studentBankAccount.getSchool());
+            System.out.println(studentBankAccount.getSchoolName());
 
 
     }
