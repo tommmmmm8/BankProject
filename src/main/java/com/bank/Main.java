@@ -4,7 +4,7 @@ import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
 import com.bank.bankAccounts.factories.BankAccountFactory;
 import com.bank.bankAccounts.services.BankAccountService;
-import com.bank.bankAccounts.generators.GenerateAccountNumber;
+import com.bank.bankAccounts.generators.AccountNumberGenerator;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.BasePerson;
 import com.bank.people.customers.factories.CustomerFactory;
@@ -36,7 +36,7 @@ public class Main {
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
 
         // StudentBankAccount
-        String generatedAccNum = GenerateAccountNumber.generate().toString();
+        String generatedAccNum = AccountNumberGenerator.generate().toString();
         System.out.println("Generated Account Number: " + generatedAccNum);
         BaseBankAccount studentAccount = bankAccountFactory.createStudentBankAccount("4", generatedAccNum, owner, "DELTA");
         if (studentAccount instanceof StudentBankAccount studentBankAccount)
