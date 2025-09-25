@@ -1,4 +1,4 @@
-package com.bank.service;
+package com.bank.bankAccounts.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
 

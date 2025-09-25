@@ -1,9 +1,9 @@
-package com.bank.factories;
+package com.bank.bankAccounts.factories;
 
 import com.bank.bankAccounts.BankAccount;
 import com.bank.bankAccounts.SavingBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
-import com.bank.people.BankAccountOwner;
+import com.bank.people.customers.BankAccountOwner;
 
 public class BankAccountFactory {
 

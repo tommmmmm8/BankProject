@@ -1,17 +1,18 @@
 package com.bank;
 
-import com.bank.bankAccounts.BankAccount;
 import com.bank.bankAccounts.BaseBankAccount;
-import com.bank.bankAccounts.SavingBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
-import com.bank.factories.BankAccountFactory;
-import com.bank.service.BankAccountService;
-import com.bank.service.GenerateAccountNumber;
-import com.bank.people.BankAccountOwner;
+import com.bank.bankAccounts.factories.BankAccountFactory;
+import com.bank.bankAccounts.services.BankAccountService;
+import com.bank.bankAccounts.generators.GenerateAccountNumber;
+import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.BasePerson;
+import com.bank.people.customers.factories.CustomerFactory;
 
 public class Main {
     public static void main(String[] args) {
+
+        CustomerFactory customerFactory = new CustomerFactory();
         BasePerson person = new BasePerson("1",
                 "John",
                 "Doe",
@@ -19,7 +20,7 @@ public class Main {
                 "Male",
                 "123 Main St"
         );
-        BankAccountOwner owner = new BankAccountOwner("1", person);
+        BankAccountOwner owner = customerFactory.createBankAccountOwner("1", person);
 
         BankAccountFactory bankAccountFactory = new BankAccountFactory();
 

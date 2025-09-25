@@ -1,6 +1,6 @@
 package com.bank.bankAccounts;
 
-import com.bank.people.BankAccountOwner;
+import com.bank.people.customers.BankAccountOwner;
 
 public class BankAccount extends BaseBankAccount {
 

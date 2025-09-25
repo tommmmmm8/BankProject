@@ -1,4 +1,6 @@
-package com.bank.people;
+package com.bank.people.customers;
+
+import com.bank.people.BasePerson;
 
 public class BankAccountOwner {
 
