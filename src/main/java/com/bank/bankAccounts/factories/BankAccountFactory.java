@@ -8,17 +8,18 @@ import com.bank.people.customers.BankAccountOwner;
 
 public class BankAccountFactory {
 
-    AccountNumberGenerator generator = new AccountNumberGenerator();
-
     public BankAccount createBankAccount(String uuid, BankAccountOwner owner) {
+        String accountNumber = AccountNumberGenerator.generate();
         return new BankAccount(uuid, accountNumber, owner);
     }
 
-    public SavingBankAccount createSavingBankAccount(String uuid, String accountNumber, BankAccountOwner owner) {
+    public SavingBankAccount createSavingBankAccount(String uuid, BankAccountOwner owner) {
+        String accountNumber = AccountNumberGenerator.generate();
         return new SavingBankAccount(uuid, accountNumber, owner);
     }
 
-    public StudentBankAccount createStudentBankAccount(String uuid, String accountNumber, BankAccountOwner owner, String schoolName) {
+    public StudentBankAccount createStudentBankAccount(String uuid, BankAccountOwner owner, String schoolName) {
+        String accountNumber = AccountNumberGenerator.generate();
         return new StudentBankAccount(uuid, accountNumber, owner, schoolName);
     }
 

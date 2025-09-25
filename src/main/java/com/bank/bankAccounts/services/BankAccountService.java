@@ -1,25 +1,26 @@
 package com.bank.bankAccounts.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
+import com.bank.transactions.services.TransactionValidationService;
 
 public class BankAccountService {
 
+    TransactionValidationService validationService = new TransactionValidationService();
+
     public void deposit(BaseBankAccount account, double amount) {
-        if (amount <= 0)
-            throw new IllegalArgumentException("Deposit amount muse be positive.");
+        validationService.validateDepositTransaction(amount);
+
         double newBalance = account.getBalance() + amount;
         account.setBalance(newBalance);
     }
 
     public void withdraw(BaseBankAccount account, double amount) {
-        if (amount < 0)
-            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+        validationService.validateWithdrawalTransaction(account, amount);
+
         if (account.getBalance() >= amount) {
             double newBalance = account.getBalance() - amount;
             account.setBalance(newBalance);
         }
-        else
-            throw new IllegalArgumentException("Withdrawal amount must not be greater than account's balance.");
     }
 
 }
