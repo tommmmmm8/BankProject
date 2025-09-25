@@ -4,6 +4,7 @@ import com.bank.bankAccounts.BankAccount;
 import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.bankAccounts.SavingBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
+import com.bank.helper.GenerateAccountNumber;
 import com.bank.people.BankAccountOwner;
 import com.bank.people.BasePerson;
 
@@ -30,7 +31,7 @@ public class Main {
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
 
         // StudentBankAccount
-        BaseBankAccount studentAccount = new StudentBankAccount("4", "19380", owner, "DELTA");
+        BaseBankAccount studentAccount = new StudentBankAccount("4", GenerateAccountNumber.generate().toString(), owner, "DELTA");
         if (studentAccount instanceof StudentBankAccount studentBankAccount)
             System.out.println(studentBankAccount.getSchoolName());
 

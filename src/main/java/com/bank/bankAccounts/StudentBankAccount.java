@@ -6,10 +6,10 @@ public class StudentBankAccount extends BaseBankAccount {
 
     private String schoolName;
 
-    public StudentBankAccount(String uuid, String accountNumber, BankAccountOwner owner, String school) {
+    public StudentBankAccount(String uuid, String accountNumber, BankAccountOwner owner, String schoolName) {
         super(uuid, accountNumber, owner);
 
-        this.schoolName = school;
+        this.schoolName = schoolName;
     }
 
     public String getSchoolName() {
