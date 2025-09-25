@@ -4,7 +4,9 @@ import com.bank.bankAccounts.BankAccount;
 import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.bankAccounts.SavingBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
-import com.bank.helper.GenerateAccountNumber;
+import com.bank.factories.BankAccountFactory;
+import com.bank.service.BankAccountService;
+import com.bank.service.GenerateAccountNumber;
 import com.bank.people.BankAccountOwner;
 import com.bank.people.BasePerson;
 
@@ -19,22 +21,25 @@ public class Main {
         );
         BankAccountOwner owner = new BankAccountOwner("1", person);
 
+        BankAccountFactory bankAccountFactory = new BankAccountFactory();
+
         // BankAccount
-        BaseBankAccount bankAccount = new BankAccount("2", "67890", owner);
-        bankAccount.addBalance(500.0);
+        BaseBankAccount bankAccount = bankAccountFactory.createBankAccount("2", "67890", owner);
+        new BankAccountService().deposit(bankAccount, 500.0);
         System.out.println("BankAccount Balance: " + bankAccount.getBalance());
         System.out.println(bankAccount.getOwner().getPerson().getFirstName());
 
         // SavingBankAccount
-        BaseBankAccount savingAccount = new SavingBankAccount("3", "54321", owner);
-        savingAccount.addBalance(1000.0);
+        BaseBankAccount savingAccount = bankAccountFactory.createSavingBankAccount("3", "54321", owner);
+        new BankAccountService().deposit(savingAccount, 1000.0);
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
 
         // StudentBankAccount
-        BaseBankAccount studentAccount = new StudentBankAccount("4", GenerateAccountNumber.generate().toString(), owner, "DELTA");
+        String generatedAccNum = GenerateAccountNumber.generate().toString();
+        System.out.println("Generated Account Number: " + generatedAccNum);
+        BaseBankAccount studentAccount = bankAccountFactory.createStudentBankAccount("4", generatedAccNum, owner, "DELTA");
         if (studentAccount instanceof StudentBankAccount studentBankAccount)
             System.out.println(studentBankAccount.getSchoolName());
-
 
     }
 }

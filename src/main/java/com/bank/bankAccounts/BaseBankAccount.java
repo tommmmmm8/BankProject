@@ -46,20 +46,7 @@ public abstract class BaseBankAccount {
         return balance;
     }
 
-//    public void setBalance(double balance) {
-//        this.balance = balance;
-//    }
-
-    public void addBalance(double amount) {
-        this.balance += amount;
-    }
-
-    public void substractBalance (double amount) {
-        if (amount < 0)
-            throw new IllegalArgumentException("");
-        if (balance >= amount)
-            this.balance -= amount;
-        else
-            throw new IllegalArgumentException("");
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
