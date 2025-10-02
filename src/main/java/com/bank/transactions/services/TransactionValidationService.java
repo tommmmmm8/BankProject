@@ -4,9 +4,11 @@ import com.bank.bankAccounts.BaseBankAccount;
 
 public class TransactionValidationService {
 
+    private final int AML_CHECK_LIMIT = 10000;
+
     public void validateDepositTransaction(double amount) {
         if (amount <= 0)
-            throw new IllegalArgumentException("Deposit/Withdrawal amount must be positive.");]
+            throw new IllegalArgumentException("Deposit/Withdrawal amount must be positive.");
 
         amlCheck(amount);
     }
@@ -20,7 +22,7 @@ public class TransactionValidationService {
     }
 
     public void amlCheck(double amount) {
-        if (amount > 10000)
+        if (amount > AML_CHECK_LIMIT)
             throw new IllegalArgumentException("Transaction flagged for AML review.");
     }
 
