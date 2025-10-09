@@ -2,7 +2,9 @@ package com.bank.bankAccounts;
 
 import com.bank.people.customers.BankAccountOwner;
 
-public class StudentBankAccount extends BaseBankAccount {
+import java.util.HashMap;
+
+public class StudentBankAccount extends BankAccountWithPaymentCards {
 
     private String schoolName;
 
@@ -10,6 +12,7 @@ public class StudentBankAccount extends BaseBankAccount {
         super(uuid, accountNumber, owner);
 
         this.schoolName = schoolName;
+        this.paymentCardsMap = new HashMap<>();
     }
 
     public String getSchoolName() {

@@ -2,7 +2,9 @@ package com.bank.bankAccounts;
 
 import com.bank.people.customers.BankAccountOwner;
 
-public class SavingBankAccount extends BaseBankAccount {
+import java.util.HashMap;
+
+public class SavingBankAccount extends BankAccountWithPaymentCards {
 
     private float interestRate;
 
@@ -10,5 +12,6 @@ public class SavingBankAccount extends BaseBankAccount {
         super(uuid, accountNumber, owner);
 
         this.interestRate = 5;
+        this.paymentCardsMap = new HashMap<>();
     }
 }
