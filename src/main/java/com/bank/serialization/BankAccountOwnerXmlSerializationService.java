@@ -1,17 +1,15 @@
 package com.bank.serialization;
 
-import com.bank.people.BasePerson;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.serialization.BankAccountOwnerSerialization;
 import com.bank.people.serialization.BankAccountSerializationFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.google.gson.Gson;
 
-public class BankAccountOwnerJsonSerializationService implements Serialization {
+public class BankAccountOwnerXmlSerializationService implements Serialization {
 
     BankAccountSerializationFactory bankAccountSerializationFactory = new BankAccountSerializationFactory();
-    Gson gson = new Gson();
+    XmlMapper xmlMapper = new XmlMapper();
 
     @Override
     public String serialize(Object bankAccountOwner) {
@@ -21,14 +19,19 @@ public class BankAccountOwnerJsonSerializationService implements Serialization {
 
         BankAccountOwnerSerialization bankAccountOwnerSerialization = bankAccountSerializationFactory.createBankAccountOwnerSerialization((BankAccountOwner) bankAccountOwner);
 
-        return gson.toJson(bankAccountOwnerSerialization);
+        try {
+            return xmlMapper.writeValueAsString(bankAccountOwnerSerialization);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public Object deserialize(String serializedData) {
-        return gson.fromJson(serializedData, BankAccountOwnerSerialization.class);
-    }
-
-    public static void main(String[] args) {
+    public Object deserialize(String bankAccountOwner) {
+        try {
+            return xmlMapper.readValue(bankAccountOwner, BankAccountOwnerSerialization.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
