@@ -38,6 +38,11 @@ public class Main {
         printBankAccountBalance(bankAccount);
         System.out.println(bankAccount.getPaymentCardsMap());
 
+        /*
+        PaymentCard ma v sobe referenci na bankovni ucet
+        Pri vytvoreni PaymentCard se ve faktorce prida karta do mapy v BankAccountWithPaymentCards
+        PaymentCardService ma metodu pay(paymentcard, amount), ktera strhne amount z uctu pomoci metody withdraw (z BankAccountService)
+        */
 
 //        // SavingBankAccount
 //        BaseBankAccount savingAccount = bankAccountFactory.createSavingBankAccount("54321", owner);
