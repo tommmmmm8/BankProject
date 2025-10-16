@@ -1,5 +1,6 @@
 package com.bank.cards;
 
+import com.bank.bankAccounts.BankAccountWithPaymentCards;
 import com.bank.cards.calculators.PaymentCardExpirationCalculator;
 import com.bank.cards.generators.PaymentCardCvvGenerator;
 import com.bank.cards.generators.PaymentCardNumberGenerator;
@@ -14,7 +15,7 @@ public class PaymentCardFactory {
     private PaymentCardPinGenerator paymentCardPinGenerator = new PaymentCardPinGenerator();
     private PaymentCardExpirationCalculator paymentCardExpirationCalculator = new PaymentCardExpirationCalculator();
 
-    public PaymentCard create() {
+    public PaymentCard create(BankAccountWithPaymentCards bankAccount) {
 
         String uuid = UUID.randomUUID().toString();
         String cardNumber = paymentCardNumberGenerator.generateCardNumber();
@@ -23,6 +24,8 @@ public class PaymentCardFactory {
         String expireMonth = paymentCardExpirationCalculator.calculateMonthExpire();
         String expireYear = paymentCardExpirationCalculator.calculateYearExpire();
 
-        return new PaymentCard(uuid, cardNumber, cvv, pin, expireMonth, expireYear);
+        PaymentCard paymentCard = new PaymentCard(uuid, cardNumber, cvv, pin, expireMonth, expireYear, bankAccount);
+        bankAccount.addPaymentCard(paymentCard);
+        return paymentCard;
     }
 }

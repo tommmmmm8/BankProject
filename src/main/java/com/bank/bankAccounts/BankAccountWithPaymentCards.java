@@ -19,4 +19,8 @@ public class BankAccountWithPaymentCards extends BaseBankAccount {
     public void addPaymentCard(PaymentCard paymentCard) {
         this.paymentCardsMap.put(paymentCard.getCardNumber(), paymentCard);
     }
+
+    public Map<String, PaymentCard> getPaymentCardsMap() {
+        return paymentCardsMap;
+    }
 }

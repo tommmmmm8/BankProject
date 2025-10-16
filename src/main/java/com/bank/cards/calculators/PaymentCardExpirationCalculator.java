@@ -16,7 +16,7 @@ public class PaymentCardExpirationCalculator {
     public String calculateYearExpire() {
         LocalDate today = LocalDate.now();
         final int DEFAULT_EXPIRATION_YEAR_LENGTH = 5;
-        DateTimeFormatter YEAR_FMT_SHORT = DateTimeFormatter.ofPattern("yy");
+        LocalDate future = today.plusYears(DEFAULT_EXPIRATION_YEAR_LENGTH);
         return future.format(YEAR_FMT_SHORT);
     }
 }

@@ -1,5 +1,7 @@
 package com.bank.cards;
 
+import com.bank.bankAccounts.BankAccountWithPaymentCards;
+
 public class PaymentCard {
 
     private String uuid;
@@ -16,13 +18,16 @@ public class PaymentCard {
 
     private String expireYear;
 
-    public PaymentCard(String uuid, String cardNumber, String ccv, String pin, String expireMonth, String expireYear) {
+    private BankAccountWithPaymentCards bankAccount;
+
+    public PaymentCard(String uuid, String cardNumber, String ccv, String pin, String expireMonth, String expireYear, BankAccountWithPaymentCards bankAccount) {
         this.uuid = uuid;
         this.cardNumber = cardNumber;
         this.ccv = ccv;
         this.pin = pin;
         this.expireMonth = expireMonth;
         this.expireYear = expireYear;
+        this.bankAccount = bankAccount;
     }
 
     public String getUuid() {
@@ -47,5 +52,9 @@ public class PaymentCard {
 
     public String getExpireYear() {
         return expireYear;
+    }
+
+    public BankAccountWithPaymentCards getBankAccount() {
+        return bankAccount;
     }
 }
