@@ -15,7 +15,7 @@ public class PaymentCardFactory {
     private PaymentCardPinGenerator paymentCardPinGenerator = new PaymentCardPinGenerator();
     private PaymentCardExpirationCalculator paymentCardExpirationCalculator = new PaymentCardExpirationCalculator();
 
-    public PaymentCard create(BankAccountWithPaymentCards bankAccount) {
+    public PaymentCard createPaymentCard(BankAccountWithPaymentCards bankAccount) {
 
         String uuid = UUID.randomUUID().toString();
         String cardNumber = paymentCardNumberGenerator.generateCardNumber();
@@ -24,7 +24,7 @@ public class PaymentCardFactory {
         String expireMonth = paymentCardExpirationCalculator.calculateMonthExpire();
         String expireYear = paymentCardExpirationCalculator.calculateYearExpire();
 
-        PaymentCard paymentCard = new PaymentCard(uuid, cardNumber, cvv, pin, expireMonth, expireYear, bankAccount);
+        PaymentCard paymentCard = new PaymentCard(uuid, cardNumber, cvv, pin, expireMonth, expireYear);
         bankAccount.addPaymentCard(paymentCard);
         return paymentCard;
     }
