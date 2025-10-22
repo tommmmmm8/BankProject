@@ -31,6 +31,8 @@ public class Main {
         bankAccountService.deposit(bankAccount, 500.0);
         printBankAccountBalance(bankAccount);
 
+        bankAccountService.withdraw(bankAccount, 100);
+
         PaymentCard paymentCard = paymentCardFactory.createPaymentCard(bankAccount);
         paymentCardService.pay(paymentCard, 230.0);
         printBankAccountBalance(bankAccount);
