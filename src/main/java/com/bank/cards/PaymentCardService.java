@@ -13,6 +13,6 @@ public class PaymentCardService {
         BankAccountWithPaymentCards bankAccountWithPaymentCards = bankAccountDatabase.findBankAccountByPaymentCard(paymentCard);
         if (bankAccountWithPaymentCards == null) throw new IllegalArgumentException("Bank account not found for the provided payment card.");
 
-        bankAccountService.withdraw(bankAccountWithPaymentCards, amount);
+        bankAccountService.withdraw(bankAccountWithPaymentCards, amount, paymentCard);
     }
 }
