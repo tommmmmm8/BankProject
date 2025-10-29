@@ -2,20 +2,23 @@ package com.bank.bankAccounts.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.cards.PaymentCard;
-import com.bank.transactions.services.TransactionLogger;
+import com.bank.logger.ConsoleLogger;
+import com.bank.transactions.services.TransactionLogMessageCreator;
 import com.bank.transactions.services.TransactionTypes;
 import com.bank.transactions.services.TransactionValidationService;
 
 public class BankAccountService {
 
     TransactionValidationService validationService = new TransactionValidationService();
-    TransactionLogger transactionLogger = new TransactionLogger();
+    TransactionLogMessageCreator transactionLogMessageCreator = new TransactionLogMessageCreator();
+    ConsoleLogger consoleLogger = new ConsoleLogger();
 
     public void deposit(BaseBankAccount bankAccount, double amount) {
         validationService.validateDepositTransaction(amount);
 
         double newBalance = bankAccount.getBalance() + amount;
         bankAccount.setBalance(newBalance);
+        consoleLogger.log(transactionLogMessageCreator.createMessage(TransactionTypes.DEPOSIT, bankAccount, amount));
     }
 
     public void withdraw(BaseBankAccount bankAccount, double amount, PaymentCard paymentCard) {
@@ -26,7 +29,8 @@ public class BankAccountService {
             bankAccount.setBalance(newBalance);
         }
 
-        transactionLogger.logTransaction(TransactionTypes.WITHDRAWAL, bankAccount, amount, paymentCard);
+        String paymentCardNumber = paymentCard != null ? paymentCard.getCardNumber() : null;
+        consoleLogger.log(transactionLogMessageCreator.createMessage(TransactionTypes.WITHDRAWAL, bankAccount, amount, paymentCardNumber));
     }
 
     public void withdraw(BaseBankAccount bankAccount, double amount) {
