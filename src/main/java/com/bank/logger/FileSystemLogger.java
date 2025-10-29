@@ -1,5 +1,8 @@
 package com.bank.logger;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class FileSystemLogger implements Logger {
 
     @Override

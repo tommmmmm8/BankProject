@@ -1,7 +1,9 @@
 package com.bank.transactions.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
+import com.google.inject.Singleton;
 
+@Singleton
 public class TransactionLogMessageCreator {
 
     public String createMessage(TransactionTypes type, BaseBankAccount bankAccount, double amount, String paymentCardNumber) {

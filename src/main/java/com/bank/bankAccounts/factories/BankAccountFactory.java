@@ -1,14 +1,19 @@
 package com.bank.bankAccounts.factories;
 
 import com.bank.bankAccounts.BankAccount;
-import com.bank.bankAccounts.BankAccountDatabase;
+import com.bank.bankAccounts.database.BankAccountDatabase;
 import com.bank.bankAccounts.SavingBankAccount;
 import com.bank.bankAccounts.StudentBankAccount;
 import com.bank.bankAccounts.generators.AccountNumberGenerator;
 import com.bank.people.customers.BankAccountOwner;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class BankAccountFactory {
-    BankAccountDatabase bankAccountDatabase = new BankAccountDatabase();
+
+    @Inject
+    BankAccountDatabase bankAccountDatabase;
 
     public BankAccount createBankAccount(String uuid, BankAccountOwner owner) {
         String accountNumber = AccountNumberGenerator.generate();

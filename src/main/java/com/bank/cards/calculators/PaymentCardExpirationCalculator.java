@@ -1,8 +1,11 @@
 package com.bank.cards.calculators;
 
+import com.google.inject.Singleton;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Singleton
 public class PaymentCardExpirationCalculator {
 
     private static final DateTimeFormatter MONTH_FMT = DateTimeFormatter.ofPattern("MM");

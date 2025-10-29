@@ -1,17 +1,20 @@
 package com.bank.serialization;
 
-import com.bank.people.BasePerson;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.serialization.BankAccountOwnerSerialization;
 import com.bank.people.serialization.BankAccountSerializationFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class BankAccountOwnerJsonSerializationService implements Serialization {
 
-    BankAccountSerializationFactory bankAccountSerializationFactory = new BankAccountSerializationFactory();
-    Gson gson = new Gson();
+    @Inject
+    BankAccountSerializationFactory bankAccountSerializationFactory;
+
+    @Inject
+    Gson gson;
 
     @Override
     public String serialize(Object bankAccountOwner) {

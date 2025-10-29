@@ -5,11 +5,17 @@ import com.bank.people.serialization.BankAccountOwnerSerialization;
 import com.bank.people.serialization.BankAccountSerializationFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class BankAccountOwnerXmlSerializationService implements Serialization {
 
-    BankAccountSerializationFactory bankAccountSerializationFactory = new BankAccountSerializationFactory();
-    XmlMapper xmlMapper = new XmlMapper();
+    @Inject
+    BankAccountSerializationFactory bankAccountSerializationFactory;
+
+    @Inject
+    XmlMapper xmlMapper;
 
     @Override
     public String serialize(Object bankAccountOwner) {

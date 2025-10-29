@@ -1,5 +1,8 @@
 package com.bank.cards.generators;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class PaymentCardPinGenerator {
 
     public String generatePin() {

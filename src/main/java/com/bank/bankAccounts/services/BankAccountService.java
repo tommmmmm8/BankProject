@@ -2,23 +2,31 @@ package com.bank.bankAccounts.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.cards.PaymentCard;
-import com.bank.logger.ConsoleLogger;
+import com.bank.logger.Logger;
 import com.bank.transactions.services.TransactionLogMessageCreator;
 import com.bank.transactions.services.TransactionTypes;
 import com.bank.transactions.services.TransactionValidationService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class BankAccountService {
 
-    TransactionValidationService validationService = new TransactionValidationService();
-    TransactionLogMessageCreator transactionLogMessageCreator = new TransactionLogMessageCreator();
-    ConsoleLogger consoleLogger = new ConsoleLogger();
+    @Inject
+    TransactionValidationService validationService;
+
+    @Inject
+    TransactionLogMessageCreator transactionLogMessageCreator;
+
+    @Inject
+    Logger logger;
 
     public void deposit(BaseBankAccount bankAccount, double amount) {
         validationService.validateDepositTransaction(amount);
 
         double newBalance = bankAccount.getBalance() + amount;
         bankAccount.setBalance(newBalance);
-        consoleLogger.log(transactionLogMessageCreator.createMessage(TransactionTypes.DEPOSIT, bankAccount, amount));
+        logger.log(transactionLogMessageCreator.createMessage(TransactionTypes.DEPOSIT, bankAccount, amount));
     }
 
     public void withdraw(BaseBankAccount bankAccount, double amount, PaymentCard paymentCard) {
@@ -30,7 +38,7 @@ public class BankAccountService {
         }
 
         String paymentCardNumber = paymentCard != null ? paymentCard.getCardNumber() : null;
-        consoleLogger.log(transactionLogMessageCreator.createMessage(TransactionTypes.WITHDRAWAL, bankAccount, amount, paymentCardNumber));
+        logger.log(transactionLogMessageCreator.createMessage(TransactionTypes.WITHDRAWAL, bankAccount, amount, paymentCardNumber));
     }
 
     public void withdraw(BaseBankAccount bankAccount, double amount) {

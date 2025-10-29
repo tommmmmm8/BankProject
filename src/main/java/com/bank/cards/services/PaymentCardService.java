@@ -1,13 +1,20 @@
-package com.bank.cards;
+package com.bank.cards.services;
 
-import com.bank.bankAccounts.BankAccountDatabase;
+import com.bank.bankAccounts.database.BankAccountDatabase;
 import com.bank.bankAccounts.BankAccountWithPaymentCards;
 import com.bank.bankAccounts.services.BankAccountService;
+import com.bank.cards.PaymentCard;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class PaymentCardService {
 
-    BankAccountService bankAccountService = new BankAccountService();
-    BankAccountDatabase bankAccountDatabase = new BankAccountDatabase();
+    @Inject
+    BankAccountService bankAccountService;
+
+    @Inject
+    BankAccountDatabase bankAccountDatabase;
 
     public void pay(PaymentCard paymentCard, double amount) {
         BankAccountWithPaymentCards bankAccountWithPaymentCards = bankAccountDatabase.findBankAccountByPaymentCard(paymentCard);

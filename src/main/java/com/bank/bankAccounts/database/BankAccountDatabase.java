@@ -1,11 +1,15 @@
-package com.bank.bankAccounts;
+package com.bank.bankAccounts.database;
 
+import com.bank.bankAccounts.BankAccountWithPaymentCards;
+import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.cards.PaymentCard;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
+@Singleton
 public class BankAccountDatabase {
 
     private static ArrayList<BaseBankAccount> bankAccounts = new ArrayList<>();

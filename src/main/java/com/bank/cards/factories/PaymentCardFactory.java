@@ -1,19 +1,30 @@
-package com.bank.cards;
+package com.bank.cards.factories;
 
 import com.bank.bankAccounts.BankAccountWithPaymentCards;
+import com.bank.cards.PaymentCard;
 import com.bank.cards.calculators.PaymentCardExpirationCalculator;
 import com.bank.cards.generators.PaymentCardCvvGenerator;
 import com.bank.cards.generators.PaymentCardNumberGenerator;
 import com.bank.cards.generators.PaymentCardPinGenerator;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.UUID;
 
+@Singleton
 public class PaymentCardFactory {
 
-    private PaymentCardNumberGenerator paymentCardNumberGenerator = new PaymentCardNumberGenerator();
-    private PaymentCardCvvGenerator paymentCardCvvGenerator = new PaymentCardCvvGenerator();
-    private PaymentCardPinGenerator paymentCardPinGenerator = new PaymentCardPinGenerator();
-    private PaymentCardExpirationCalculator paymentCardExpirationCalculator = new PaymentCardExpirationCalculator();
+    @Inject
+    private PaymentCardNumberGenerator paymentCardNumberGenerator;
+
+    @Inject
+    private PaymentCardCvvGenerator paymentCardCvvGenerator;
+
+    @Inject
+    private PaymentCardPinGenerator paymentCardPinGenerator;
+
+    @Inject
+    private PaymentCardExpirationCalculator paymentCardExpirationCalculator;
 
     public PaymentCard createPaymentCard(BankAccountWithPaymentCards bankAccount) {
 
