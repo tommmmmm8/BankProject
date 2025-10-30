@@ -10,7 +10,7 @@ public abstract class BaseBankAccount {
 
     private BankAccountOwner owner;
 
-    double balance;
+    private double balance;
 
     public BaseBankAccount(String uuid, String accountNumber, BankAccountOwner owner) {
         this.uuid = uuid;

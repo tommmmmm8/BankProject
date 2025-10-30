@@ -11,10 +11,10 @@ import com.google.inject.Singleton;
 public class PaymentCardService {
 
     @Inject
-    BankAccountService bankAccountService;
+    private BankAccountService bankAccountService;
 
     @Inject
-    BankAccountDatabase bankAccountDatabase;
+    private BankAccountDatabase bankAccountDatabase;
 
     public void pay(PaymentCard paymentCard, double amount) {
         BankAccountWithPaymentCards bankAccountWithPaymentCards = bankAccountDatabase.findBankAccountByPaymentCard(paymentCard);

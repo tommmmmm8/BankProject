@@ -12,6 +12,7 @@ import com.bank.people.BasePerson;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.customers.factories.BasePersonFactory;
 import com.bank.people.customers.factories.CustomerFactory;
+import com.bank.scheduler.InterestCalculationScheduler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -39,7 +40,14 @@ public class App {
     @Inject
     PaymentCardService paymentCardService;
 
+    @Inject
+    InterestCalculationScheduler scheduler;
+
     public void run() {
+
+        Thread schedulerThread = new Thread(scheduler::start);
+        schedulerThread.setDaemon(true);
+        schedulerThread.start();
 
         BasePerson person = basePersonFactory.createBasePerson("1", "John", "Doe", 1990, "Male", "123 Main St");
         BankAccountOwner owner = customerFactory.createBankAccountOwner("1", person);
@@ -56,10 +64,10 @@ public class App {
 
         System.out.println(bankAccountDatabase.findBankAccountByPaymentCard(paymentCard).getUuid() + " == " + bankAccount.getUuid());
 
-//        // SavingBankAccount
-//        BaseBankAccount savingAccount = bankAccountFactory.createSavingBankAccount("54321", owner);
-//        new BankAccountService().deposit(savingAccount, 1000.0);
-//        System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
+        // SavingBankAccount
+        BaseBankAccount savingAccount = bankAccountFactory.createSavingBankAccount("54321", owner);
+        bankAccountService.deposit(savingAccount, 1000.0);
+        System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
     }
 
     public static void printBankAccountBalance(BaseBankAccount bankAccount) {

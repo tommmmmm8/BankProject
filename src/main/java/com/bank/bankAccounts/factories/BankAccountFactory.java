@@ -13,7 +13,7 @@ import com.google.inject.Singleton;
 public class BankAccountFactory {
 
     @Inject
-    BankAccountDatabase bankAccountDatabase;
+    private BankAccountDatabase bankAccountDatabase;
 
     public BankAccount createBankAccount(String uuid, BankAccountOwner owner) {
         String accountNumber = AccountNumberGenerator.generate();

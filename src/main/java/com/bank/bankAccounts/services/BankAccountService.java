@@ -13,13 +13,13 @@ import com.google.inject.Singleton;
 public class BankAccountService {
 
     @Inject
-    TransactionValidationService validationService;
+    private TransactionValidationService validationService;
 
     @Inject
-    TransactionLogMessageCreator transactionLogMessageCreator;
+    private TransactionLogMessageCreator transactionLogMessageCreator;
 
     @Inject
-    Logger logger;
+    private Logger logger;
 
     public void deposit(BaseBankAccount bankAccount, double amount) {
         validationService.validateDepositTransaction(amount);

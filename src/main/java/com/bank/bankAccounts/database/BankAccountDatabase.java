@@ -38,4 +38,13 @@ public class BankAccountDatabase {
         return null;
     }
 
+    public <T extends BaseBankAccount> ArrayList<T> getBankAccountsByType(Class<T> tClass) {
+        ArrayList<T> accountsByType = new ArrayList<>();
+        for (BaseBankAccount baseBankAccount : bankAccounts)
+            if (tClass.isInstance(baseBankAccount))
+                accountsByType.add(tClass.cast(baseBankAccount));
+
+        return accountsByType;
+    }
+
 }
