@@ -1,12 +1,23 @@
 package com.bank.transactions.services;
 
 import com.bank.bankAccounts.BaseBankAccount;
+import com.bank.bankAccounts.managers.BankAccountsManager;
+import com.bank.transactions.Transaction;
+import com.bank.transactions.TransactionTypes;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class TransactionLogMessageCreator {
 
-    public String createMessage(TransactionTypes type, BaseBankAccount bankAccount, double amount, String paymentCardNumber) {
+    @Inject
+    BankAccountsManager bankAccountsManager;
+
+    public String createMessage(Transaction transaction, String paymentCardNumber) {
+        BaseBankAccount bankAccount = bankAccountsManager.findBankAccountByUuid(transaction.getAccountUuid());
+        TransactionTypes type = transaction.getTransactionType();
+        double amount = transaction.getAmount();
+
         double newBalance = bankAccount.getBalance();
         double previousBalance = type == TransactionTypes.DEPOSIT ? newBalance - amount : newBalance + amount;
 
@@ -21,8 +32,8 @@ public class TransactionLogMessageCreator {
             throw new IllegalArgumentException("Invalid transaction type: " + type);
     }
 
-    public String createMessage(TransactionTypes type, BaseBankAccount bankAccount, double amount) {
-        return createMessage(type, bankAccount, amount, null);
+    public String createMessage(Transaction transaction) {
+        return createMessage(transaction, null);
     }
 }
 

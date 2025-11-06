@@ -1,4 +1,4 @@
-package com.bank.bankAccounts.database;
+package com.bank.bankAccounts.managers;
 
 import com.bank.bankAccounts.BankAccountWithPaymentCards;
 import com.bank.bankAccounts.BaseBankAccount;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Singleton
-public class BankAccountDatabase {
+public class BankAccountsManager {
 
     private static ArrayList<BaseBankAccount> bankAccounts = new ArrayList<>();
 
@@ -22,6 +22,14 @@ public class BankAccountDatabase {
     public void removeBankAccount(String uuid) {
         if (uuid.isEmpty()) throw new IllegalArgumentException("Uuid cannot be null");
         bankAccounts.removeIf( bankAccount -> Objects.equals(bankAccount.getUuid(), uuid));
+    }
+
+    public BaseBankAccount findBankAccountByUuid(String uuid) {
+        if (uuid.isEmpty()) throw new IllegalArgumentException("Uuid cannot be null");
+        return bankAccounts.stream()
+                .filter(bankAccount -> Objects.equals(bankAccount.getUuid(), uuid))
+                .findFirst()
+                .orElse(null);
     }
 
     public BankAccountWithPaymentCards findBankAccountByPaymentCard(PaymentCard paymentCard) {

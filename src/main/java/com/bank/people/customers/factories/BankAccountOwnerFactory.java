@@ -5,7 +5,7 @@ import com.bank.people.customers.BankAccountOwner;
 import com.google.inject.Singleton;
 
 @Singleton
-public class CustomerFactory {
+public class BankAccountOwnerFactory {
 
     public BankAccountOwner createBankAccountOwner(String uuid, BasePerson person) {
         return new BankAccountOwner(uuid, person);

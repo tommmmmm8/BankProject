@@ -1,7 +1,7 @@
 package com.bank;
 
 import com.bank.bankAccounts.BankAccount;
-import com.bank.bankAccounts.database.BankAccountDatabase;
+import com.bank.bankAccounts.managers.BankAccountsManager;
 import com.bank.bankAccounts.BaseBankAccount;
 import com.bank.bankAccounts.factories.BankAccountFactory;
 import com.bank.bankAccounts.services.BankAccountService;
@@ -11,7 +11,7 @@ import com.bank.cards.services.PaymentCardService;
 import com.bank.people.BasePerson;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.customers.factories.BasePersonFactory;
-import com.bank.people.customers.factories.CustomerFactory;
+import com.bank.people.customers.factories.BankAccountOwnerFactory;
 import com.bank.scheduler.InterestCalculationScheduler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -23,7 +23,7 @@ public class App {
     BasePersonFactory basePersonFactory;
 
     @Inject
-    CustomerFactory customerFactory;
+    BankAccountOwnerFactory bankAccountOwnerFactory;
 
     @Inject
     BankAccountFactory bankAccountFactory;
@@ -32,7 +32,7 @@ public class App {
     BankAccountService bankAccountService;
 
     @Inject
-    BankAccountDatabase bankAccountDatabase;
+    BankAccountsManager bankAccountsManager;
 
     @Inject
     PaymentCardFactory paymentCardFactory;
@@ -44,13 +44,8 @@ public class App {
     InterestCalculationScheduler scheduler;
 
     public void run() {
-
-        Thread schedulerThread = new Thread(scheduler::start);
-        schedulerThread.setDaemon(true);
-        schedulerThread.start();
-
         BasePerson person = basePersonFactory.createBasePerson("1", "John", "Doe", 1990, "Male", "123 Main St");
-        BankAccountOwner owner = customerFactory.createBankAccountOwner("1", person);
+        BankAccountOwner owner = bankAccountOwnerFactory.createBankAccountOwner("1", person);
 
         BankAccount bankAccount = bankAccountFactory.createBankAccount("67890", owner);
         bankAccountService.deposit(bankAccount, 500.0);
@@ -62,12 +57,17 @@ public class App {
         paymentCardService.pay(paymentCard, 230.0);
         printBankAccountBalance(bankAccount);
 
-        System.out.println(bankAccountDatabase.findBankAccountByPaymentCard(paymentCard).getUuid() + " == " + bankAccount.getUuid());
+        System.out.println(bankAccountsManager.findBankAccountByPaymentCard(paymentCard).getUuid() + " == " + bankAccount.getUuid());
 
         // SavingBankAccount
         BaseBankAccount savingAccount = bankAccountFactory.createSavingBankAccount("54321", owner);
         bankAccountService.deposit(savingAccount, 1000.0);
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
+
+
+        Thread schedulerThread = new Thread(scheduler::start);
+        schedulerThread.setDaemon(true);
+        schedulerThread.start();
     }
 
     public static void printBankAccountBalance(BaseBankAccount bankAccount) {

@@ -2,7 +2,7 @@ package com.bank.bankAccounts.services;
 
 import com.bank.bankAccounts.calculators.BankAccountInterestCalculator;
 import com.bank.bankAccounts.SavingBankAccount;
-import com.bank.bankAccounts.database.BankAccountDatabase;
+import com.bank.bankAccounts.managers.BankAccountsManager;
 import com.bank.logger.Logger;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class BankAccountInterestService {
 
     @Inject
-    private BankAccountDatabase bankAccountDatabase;
+    private BankAccountsManager bankAccountDatabase;
 
     @Inject
     private BankAccountService bankAccountService;
