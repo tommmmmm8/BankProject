@@ -1,4 +1,4 @@
-package com.bank.scheduler;
+package com.bank.schedulers;
 
 import com.bank.bankAccounts.services.BankAccountInterestService;
 import com.google.inject.Inject;
@@ -17,7 +17,7 @@ public class InterestCalculationScheduler {
     public void start() {
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                interestService.handleInterest();
+                interestService.calculateAndApplyInterest();
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception
             }

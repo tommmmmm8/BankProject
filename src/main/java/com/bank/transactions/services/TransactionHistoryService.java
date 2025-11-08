@@ -1,5 +1,6 @@
 package com.bank.transactions.services;
 
+import com.bank.logger.Logger;
 import com.bank.serialization.TransactionJsonSerializationService;
 import com.bank.transactions.Transaction;
 import com.bank.transactions.TransactionTypes;
@@ -13,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,10 +31,15 @@ public class TransactionHistoryService {
     @Inject
     private Gson gson;
 
+    @Inject
+    private Logger logger;
+
     public void processAndSaveTransactionHistory() {
+        logger.log("processAndSaveTransactionHistory called");
         // get transactions
         // filter transaction to get relevant ones to save
         ArrayList<Transaction> transactions = transactionsManager.findTransactionsByDate(new Date());
+        logger.log("findTransactionByDate: " + Arrays.toString(transactions.toArray()));
 
         // group transactions by account
         Map<String, ArrayList<Transaction>> transactionsByAccount = transactions.stream()
@@ -53,7 +60,7 @@ public class TransactionHistoryService {
             new File(filePath).mkdir(); // Ensure the directory exists
 
             try (FileWriter writer = new FileWriter(filePath + fileName)) {
-                gson.toJson(accountTransactions, writer);
+                gson.newBuilder().setPrettyPrinting().create().toJson(accountTransactions, writer);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -25,8 +25,8 @@ public class BankAccountInterestService {
     @Inject
     private Logger logger;
 
-    public void handleInterest() {
-        logger.log("handleInterest called");
+    public void calculateAndApplyInterest() {
+        logger.log("calculateAndApplyInterest called");
         // Get saving accounts
         ArrayList<SavingBankAccount> savingBankAccounts = bankAccountDatabase.getBankAccountsByType(SavingBankAccount.class);
         // Determine on which saving accounts is interest going to be calculated

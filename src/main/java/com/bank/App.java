@@ -12,10 +12,18 @@ import com.bank.people.BasePerson;
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.customers.factories.BasePersonFactory;
 import com.bank.people.customers.factories.BankAccountOwnerFactory;
-import com.bank.scheduler.InterestCalculationScheduler;
+import com.bank.quartzScheduling.GuiceJobFactory;
+import com.bank.quartzScheduling.InterestCalculationJob;
+import com.bank.quartzScheduling.QuartzSchedulerService;
+import com.bank.quartzScheduling.TransactionHistoryJob;
+import com.bank.schedulers.InterestCalculationScheduler;
+import com.bank.transactions.Transaction;
 import com.bank.transactions.services.TransactionHistoryService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.impl.StdSchedulerFactory;
 
 @Singleton
 public class App {
@@ -42,16 +50,12 @@ public class App {
     PaymentCardService paymentCardService;
 
     @Inject
-    InterestCalculationScheduler scheduler;
+    GuiceJobFactory guiceJobFactory;
 
     @Inject
-    TransactionHistoryService transactionHistoryService;
+    QuartzSchedulerService quartzSchedulerService;
 
     public void run() {
-        Thread schedulerThread = new Thread(scheduler::start);
-        schedulerThread.setDaemon(true);
-        schedulerThread.start();
-
         BasePerson person = basePersonFactory.createBasePerson("1", "John", "Doe", 1990, "Male", "123 Main St");
         BankAccountOwner owner = bankAccountOwnerFactory.createBankAccountOwner("1", person);
 
@@ -72,7 +76,18 @@ public class App {
         bankAccountService.deposit(savingAccount, 1000.0);
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
 
-        transactionHistoryService.processAndSaveTransactionHistory();
+        try {
+            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+            // Set the GuiceJobFactory to allow Quartz to create job instances with dependencies injected by Guice
+
+            scheduler.setJobFactory(guiceJobFactory);
+            scheduler.start();
+
+            quartzSchedulerService.scheduleJob(scheduler, InterestCalculationJob.class, "group1", 1);
+            quartzSchedulerService.scheduleJob(scheduler, TransactionHistoryJob.class, "group1", 1);
+        } catch (SchedulerException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void printBankAccountBalance(BaseBankAccount bankAccount) {

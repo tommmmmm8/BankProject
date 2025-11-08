@@ -4,10 +4,7 @@ import com.bank.transactions.Transaction;
 import com.bank.transactions.TransactionTypes;
 import com.google.inject.Singleton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Singleton
 public class TransactionsManager {
@@ -26,10 +23,25 @@ public class TransactionsManager {
 
     public ArrayList<Transaction> findTransactionsByDate(Date date) {
         if (date == null) throw new IllegalArgumentException("Date cannot be null");
+
+        Calendar searchCal = Calendar.getInstance();
+        searchCal.setTime(date);
+        int searchYear = searchCal.get(Calendar.YEAR);
+        int searchMonth = searchCal.get(Calendar.MONTH);
+        int searchDay = searchCal.get(Calendar.DAY_OF_MONTH);
+
         ArrayList<Transaction> result = new ArrayList<>();
+        Calendar transCal = Calendar.getInstance();
+
         for (Transaction transaction : transactions) {
-            if (transaction.getTimestamp().equals(date))
+            transCal.setTime(transaction.getTimestamp());
+            int transYear = transCal.get(Calendar.YEAR);
+            int transMonth = transCal.get(Calendar.MONTH);
+            int transDay = transCal.get(Calendar.DAY_OF_MONTH);
+
+            if (transYear == searchYear && transMonth == searchMonth && transDay == searchDay) {
                 result.add(transaction);
+            }
         }
         return result;
     }

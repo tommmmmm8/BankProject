@@ -47,7 +47,7 @@ public class BankAccountService {
         bankAccount.setBalance(newBalance);
 
         String paymentCardNumber = paymentCard != null ? paymentCard.getCardNumber() : null;
-        Transaction transaction = transactionFactory.createTransaction(bankAccount.getUuid(), TransactionTypes.DEPOSIT, amount, new Date());
+        Transaction transaction = transactionFactory.createTransaction(bankAccount.getUuid(), TransactionTypes.WITHDRAWAL, amount, new Date());
         logger.log(transactionLogMessageCreator.createMessage(transaction, paymentCardNumber));
     }
 
