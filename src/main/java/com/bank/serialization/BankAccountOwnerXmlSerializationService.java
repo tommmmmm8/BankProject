@@ -2,7 +2,7 @@ package com.bank.serialization;
 
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.serialization.BankAccountOwnerSerialization;
-import com.bank.people.serialization.BankAccountSerializationFactory;
+import com.bank.people.customers.factories.BankAccountSerializationFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.inject.Inject;

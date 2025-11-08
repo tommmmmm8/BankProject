@@ -1,6 +1,7 @@
-package com.bank.people.serialization;
+package com.bank.people.customers.factories;
 
 import com.bank.people.customers.BankAccountOwner;
+import com.bank.people.serialization.BankAccountOwnerSerialization;
 import com.google.inject.Singleton;
 
 @Singleton

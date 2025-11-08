@@ -41,4 +41,15 @@ public class Transaction {
     public Date getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "uuid='" + uuid + '\'' +
+                ", accountUuid='" + accountUuid + '\'' +
+                ", transactionType=" + transactionType +
+                ", amount=" + amount +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

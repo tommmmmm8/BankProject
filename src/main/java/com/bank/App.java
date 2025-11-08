@@ -13,6 +13,7 @@ import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.customers.factories.BasePersonFactory;
 import com.bank.people.customers.factories.BankAccountOwnerFactory;
 import com.bank.scheduler.InterestCalculationScheduler;
+import com.bank.transactions.services.TransactionHistoryService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -43,7 +44,14 @@ public class App {
     @Inject
     InterestCalculationScheduler scheduler;
 
+    @Inject
+    TransactionHistoryService transactionHistoryService;
+
     public void run() {
+        Thread schedulerThread = new Thread(scheduler::start);
+        schedulerThread.setDaemon(true);
+        schedulerThread.start();
+
         BasePerson person = basePersonFactory.createBasePerson("1", "John", "Doe", 1990, "Male", "123 Main St");
         BankAccountOwner owner = bankAccountOwnerFactory.createBankAccountOwner("1", person);
 
@@ -64,10 +72,7 @@ public class App {
         bankAccountService.deposit(savingAccount, 1000.0);
         System.out.println("SavingBankAccount Balance: " + savingAccount.getBalance());
 
-
-        Thread schedulerThread = new Thread(scheduler::start);
-        schedulerThread.setDaemon(true);
-        schedulerThread.start();
+        transactionHistoryService.processAndSaveTransactionHistory();
     }
 
     public static void printBankAccountBalance(BaseBankAccount bankAccount) {

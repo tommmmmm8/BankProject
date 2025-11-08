@@ -2,7 +2,7 @@ package com.bank.serialization;
 
 import com.bank.people.customers.BankAccountOwner;
 import com.bank.people.serialization.BankAccountOwnerSerialization;
-import com.bank.people.serialization.BankAccountSerializationFactory;
+import com.bank.people.customers.factories.BankAccountSerializationFactory;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -11,16 +11,15 @@ import com.google.inject.Singleton;
 public class BankAccountOwnerJsonSerializationService implements Serialization {
 
     @Inject
-    BankAccountSerializationFactory bankAccountSerializationFactory;
+    private BankAccountSerializationFactory bankAccountSerializationFactory;
 
     @Inject
-    Gson gson;
+    private Gson gson;
 
     @Override
     public String serialize(Object bankAccountOwner) {
-        if (!(bankAccountOwner instanceof BankAccountOwner)) {
-            throw new IllegalArgumentException("BankAccountOwner must be of type BankAccountOwner");
-        }
+        if (!(bankAccountOwner instanceof BankAccountOwner))
+            throw new IllegalArgumentException("object must be of type BankAccountOwner");
 
         BankAccountOwnerSerialization bankAccountOwnerSerialization = bankAccountSerializationFactory.createBankAccountOwnerSerialization((BankAccountOwner) bankAccountOwner);
 
